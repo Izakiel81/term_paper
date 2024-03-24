@@ -1,7 +1,7 @@
 import mysql from 'mysql2';
 import init_tables from './db_init_queries.js';
 
-const connection = mysql.createConnection({
+export const connection = mysql.createConnection({
     multipleStatements: true,
     host: "localhost",
     user: "root",
