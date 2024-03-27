@@ -4,6 +4,7 @@ class PropertyController {
   async getProperties(request, response, next) {
     try {
       const properties = await PropertyService.getProperties();
+      console.log(properties);
       return response.status(200).json(properties);
     } catch (err) {
       next(err);

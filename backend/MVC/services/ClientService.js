@@ -1,25 +1,21 @@
 import { connection } from "../../bin/db.js";
 import ApiError from "../../error-handler/api-error.js";
-
-class PropertyService {
-  async getProperties() {
-    const query = `SELECT * FROM property`;
-
+class ClientService {
+  async getClients() {
+    const query = `SELECT * FROM client`;
     return new Promise((resolve, reject) => {
-        connection.query(query, (error, result) => {
-            if (error) {
-                reject(error);
-            } else {
-                resolve(result);
-            }
-        });
+      connection.query(query, (error, result) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(result);
+        }
+      });
     });
   }
-
-  async getPropertyById(id) {
-    if (!id) throw new ApiError("Property id is required", 400);
-    const query = `SELECT * FROM property WHERE Id = ?`;
-
+  async getClientById(id) {
+    if (!id) throw new ApiError("Client id is required", 400);
+    const query = `SELECT * FROM client WHERE Id = ${id}`;
     return new Promise((resolve, reject) => {
       connection.query(query, [id], (error, result) => {
         if (error) {
@@ -31,15 +27,14 @@ class PropertyService {
     });
   }
 
-  async addProperty(address, type, price, status) {
-    if (!address || !type || !price || !status)
+  async addClient(name, email, phone) {
+    if (!name || !email || !phone)
       throw new ApiError("All fields are required", 400);
-    const query = `INSERT INTO property (Address, Type, Price, Status) VALUES (?, ?, ?, ?)`;
-
+    const query = `INSERT INTO client (Name, Email, Phone) VALUES ('${name}', '${email}', '${phone}')`;
     return new Promise((resolve, reject) => {
       connection.query(
         query,
-        [address, type, price, status],
+        [name, email, phone],
         (error, result) => {
           if (error) {
             reject(error);
@@ -51,15 +46,14 @@ class PropertyService {
     });
   }
 
-  async updateProperty(id, address, type, price, status) {
-    if (!id || !address || !type || !price || !status)
+  async updateClient(id, name, email, phone) {
+    if (!id || !name || !email || !phone)
       throw new ApiError("All fields are required", 400);
-    const query = `UPDATE property SET Address = ?, Type = ?, Price = ?, Status = ? WHERE Id = ?`;
-
+    const query = `UPDATE client SET Name = '${name}', Email = '${email}', Phone = '${phone}' WHERE Id = ${id}`;
     return new Promise((resolve, reject) => {
       connection.query(
         query,
-        [address, type, price, status, id],
+        [name, email, phone, id],
         (error, result) => {
           if (error) {
             reject(error);
@@ -71,10 +65,9 @@ class PropertyService {
     });
   }
 
-  async deleteProperty(id) {
-    if (!id) throw new ApiError("Property id is required", 400);
-    const query = `DELETE FROM property WHERE Id = ?`;
-
+  async deleteClient(id) {
+    if (!id) throw new ApiError("Client id is required", 400);
+    const query = `DELETE FROM client WHERE Id = ${id}`;
     return new Promise((resolve, reject) => {
       connection.query(query, [id], (error, result) => {
         if (error) {
@@ -87,4 +80,4 @@ class PropertyService {
   }
 }
 
-export default new PropertyService();
+export default new ClientService();
