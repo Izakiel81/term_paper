@@ -47,7 +47,7 @@ class AgentService {
   async updateAgent(id, name, email, phone) {
     if (!id || !name || !email || !phone)
       throw new ApiError("All fields are required", 400);
-    const query = `UPDATE agent WHERE id=${id} SET name='${name}', email='${email}', phone='${phone}'`;
+    const query = `UPDATE agent SET name='${name}', email='${email}', phone='${phone}' WHERE id=${id} `;
     return new Promise((resolve, reject) => {
       connection.query(query, [name, email, phone], (error, result) => {
         if (error) {
