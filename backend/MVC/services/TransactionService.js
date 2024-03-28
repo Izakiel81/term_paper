@@ -52,7 +52,7 @@ class TransactionService {
   async updateTransaction(id, client_id, property_id, agent_id, price) {
     if (!id || !client_id || !property_id || !agent_id || !price)
       throw new ApiError("All fields are required", 400);
-    const query = `UPDATE TransactionTable SET ClientId='${client_id}', PropertyId='${property_id}', AgentId='${agent_id}', Amount='${price}' WHERE id=${id} `;
+    const query = `UPDATE TransactionTable SET ClientId=?, PropertyId=?, AgentId=?, Amount=? WHERE id=? `;
     return new Promise((resolve, reject) => {
       connection.query(
         query,

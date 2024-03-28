@@ -45,7 +45,7 @@ class PropertyFeatureService {
   }
   async updatePropertyFeature(id, feature) {
     if (!id || !feature) throw new ApiError("All fields are required", 400);
-    const query = `UPDATE PropertyFeature SET Feature = '${feature}' WHERE Id = ${id}`;
+    const query = `UPDATE PropertyFeature SET Feature = ? WHERE Id = ?`;
     return new Promise((resolve, reject) => {
       connection.query(query, [id, feature], (error, result) => {
         if (error) {

@@ -52,7 +52,7 @@ class AgentCommissionService {
     if (!id) throw new ApiError("AgentCommission id is required", 400);
     if (!agent_id || !transaction_id || !commission)
       throw new ApiError("All fields are required", 400);
-    const query = `UPDATE AgentCommission SET AgentId = '${agent_id}', TransactionId = '${transaction_id}', Commission = '${commission}' WHERE Id = ${id}`;
+    const query = `UPDATE AgentCommission SET AgentId = ?, TransactionId = ?, Commission = ? WHERE Id = ?`;
     return new Promise((resolve, reject) => {
       connection.query(
         query,

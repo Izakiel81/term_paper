@@ -53,7 +53,7 @@ class PropertyReviewService {
   async updatePropertyReview(id, property_id, client_id, rating, review_text) {
     if (!id || !property_id || !client_id || !rating || !review_text)
       throw new ApiError("All fields are required", 400);
-    const query = `UPDATE PropertyReview SET PropertyId = '${property_id}', ClientId = '${client_id}', Rating = '${rating}', ReviewText = '${review_text}' WHERE Id = ${id}`;
+    const query = `UPDATE PropertyReview SET PropertyId = ?, ClientId = ?, Rating = ?, ReviewText = ? WHERE Id = ?`;
     return new Promise((resolve, reject) => {
       connection.query(
         query,

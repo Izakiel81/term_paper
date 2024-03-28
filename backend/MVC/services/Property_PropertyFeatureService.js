@@ -51,7 +51,7 @@ class Property_PropertyFeatureService {
 
   async updateProperty_PropertyFeature(id, property_id, feature_id) {
     if(!id || !property_id || !feature_id) throw new ApiError("All fields are required", 400);
-    const query = `UPDATE Property_PropertyFeature SET PropertyId = '${property_id}', FeatureId = '${feature_id}' WHERE Id = ${id}`;
+    const query = `UPDATE Property_PropertyFeature SET PropertyId = ?, FeatureId = ? WHERE Id = ?`;
     return new Promise((resolve, reject) => {
       connection.query(
         query,

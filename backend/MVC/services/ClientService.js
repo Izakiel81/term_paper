@@ -49,7 +49,7 @@ class ClientService {
   async updateClient(id, name, email, phone) {
     if (!id || !name || !email || !phone)
       throw new ApiError("All fields are required", 400);
-    const query = `UPDATE client SET Name = '${name}', Email = '${email}', Phone = '${phone}' WHERE Id = ${id}`;
+    const query = `UPDATE client SET Name = ?, Email = ?, Phone = ? WHERE Id = ?`;
     return new Promise((resolve, reject) => {
       connection.query(
         query,

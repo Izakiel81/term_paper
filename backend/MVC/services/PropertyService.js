@@ -54,7 +54,7 @@ class PropertyService {
   async updateProperty(id, address, type, price, status) {
     if (!id || !address || !type || !price || !status)
       throw new ApiError("All fields are required", 400);
-    const query = `UPDATE property SET Address = ${address}, Type = ${type}, Price = ${price}, Status = ${price} WHERE Id = ${id}`;
+    const query = `UPDATE property SET Address = ?, Type = ?, Price = ?, Status = ? WHERE Id = ?`;
 
     return new Promise((resolve, reject) => {
       connection.query(

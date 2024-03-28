@@ -51,7 +51,7 @@ class PropertyImageService{
 
     async updatePropertyImage(id, property_id, image_url) {
         if(!id || !property_id || !image_url) throw new ApiError("All fields are required", 400);
-        const query = `UPDATE PropertyImage SET PropertyId = '${property_id}', ImageUrl = '${image_url}' WHERE Id = ${id}`;
+        const query = `UPDATE PropertyImage SET PropertyId = ?, ImageUrl = ? WHERE Id = ?`;
         return new Promise((resolve, reject) => {
             connection.query(
                 query,
