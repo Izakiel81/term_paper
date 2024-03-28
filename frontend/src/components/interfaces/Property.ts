@@ -1,6 +1,7 @@
 export interface Property {
-  address: string;
-  type: string;
-  price: number;
-  status: string;
+  Id: number;
+  Address: string;
+  Type: string;
+  Price: number;
+  Status: string;
 }

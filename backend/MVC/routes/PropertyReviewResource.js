@@ -6,6 +6,7 @@ const router = Router();
 
 router.get("/", PropertyReviewController.getPropertyReviews);
 router.get("/:id", PropertyReviewController.getPropertyReviewById);
+router.get("/property/:propertyId", PropertyReviewController.getPropertyReviewByPropertyId);
 router.post("/", PropertyReviewController.addPropertyReview);
 router.patch("/:id", PropertyReviewController.updatePropertyReview);
 router.delete("/:id", PropertyReviewController.deletePropertyReview);

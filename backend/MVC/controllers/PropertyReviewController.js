@@ -22,6 +22,17 @@ class PropertyReviewController {
     }
   }
 
+  async getPropertyReviewByPropertyId(request, response, next) {
+    try {
+      const { propertyId } = request.params;
+      const propertyReview = await PropertyReviewService.getPropertyReviewByPropertyId(
+        propertyId
+      );
+      return response.status(200).json(propertyReview);
+    } catch (err) {
+      next(err);
+    }
+  }
   async addPropertyReview(request, response, next) {
     try {
       const { propertyId, clientId, rating, reviewText } = request.body;

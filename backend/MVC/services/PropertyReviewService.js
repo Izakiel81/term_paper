@@ -31,6 +31,20 @@ class PropertyReviewService {
     });
   }
 
+  async getPropertyReviewByPropertyId(property_id) {
+    if (!property_id) throw new ApiError("Property id is required", 400);
+    const query = `SELECT * FROM PropertyReview WHERE PropertyId = ${property_id}`;
+    return new Promise((resolve, reject) => {
+      connection.query(query, [property_id], (error, result) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(result);
+        }
+      });
+    });
+  }
+
   async addPropertyReview(property_id, client_id, rating, review_text) {
     if (!property_id || !client_id || !rating || !review_text)
       throw new ApiError("All fields are required", 400);

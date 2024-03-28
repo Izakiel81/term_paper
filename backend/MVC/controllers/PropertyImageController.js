@@ -19,6 +19,17 @@ class PropertyImageController {
     }
   }
 
+  async getPropertyImageByPropertyId(request, response, next) {
+    try {
+      const { propertyId } = request.params;
+      const propertyImage = await PropertyImageService.getPropertyImageByPropertyId(
+        propertyId
+      );
+      return response.status(200).json(propertyImage);
+    } catch (err) {
+      next(err);
+    }
+  }
   async addPropertyImage(request, response, next) {
     try {
       const { propertyId, image } = request.body;

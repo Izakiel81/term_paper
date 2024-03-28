@@ -34,3 +34,32 @@ export const addProperty = async ({
 
   return res.data;
 };
+
+export const updateProperty = async ({
+  id,
+  address,
+  type,
+  price,
+  status,
+}: {
+  id: number;
+  address: string;
+  type: string;
+  price: number;
+  status: string;
+}) => {
+  const res = await axios.patch<Property>(API_URL_TO_PROPERIES + id, {
+    address,
+    type,
+    price,
+    status,
+  });
+
+  return res.data;
+};
+
+export const deleteProperty = async ({ id }: { id: number }) => {
+  const res = await axios.delete<Property>(API_URL_TO_PROPERIES + id);
+
+  return res.data;
+};

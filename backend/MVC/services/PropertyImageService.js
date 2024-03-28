@@ -31,6 +31,20 @@ class PropertyImageService{
         });
     }
 
+    async getPropertyImageByPropertyId(property_id) {
+        if (!property_id) throw new ApiError("PropertyImage property_id is required", 400);
+        const query = `SELECT * FROM PropertyImage WHERE PropertyId = ${property_id}`;
+        return new Promise((resolve, reject) => {
+            connection.query(query, [property_id], (error, result) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+    }
+
     async addPropertyImage(property_id, image_url) {
         if (!property_id || !image_url) throw new ApiError("All fields are required", 400);
         const query = `INSERT INTO PropertyImage (PropertyId, ImageUrl) VALUES ('${property_id}', '${image_url}')`;
