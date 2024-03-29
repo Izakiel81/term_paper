@@ -2,7 +2,7 @@ import axios from "axios";
 import { API_URL_TO_TRANSACTIONS } from "../consts/APIConsts";
 import { Transaction } from "../interfaces/Transaction";
 
-export const getAllTransaction = async () => {
+export const getAllTransactions = async () => {
   const res = await axios.get<Transaction[]>(API_URL_TO_TRANSACTIONS);
 
   return res.data;

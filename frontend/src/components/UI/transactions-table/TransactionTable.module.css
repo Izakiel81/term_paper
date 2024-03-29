@@ -1,0 +1,27 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .container {
+    display: flex;
+    width: fit-content;
+    padding: 20px;
+    overflow-y: auto;
+  }
+  
+  .button_container {
+    width: fit-content;
+    display: flex;
+    justify-self: flex-start;
+    margin-top: 20px;
+  }
+  
+  .delete_button_container {
+    width: fit-content;
+    position: relative;
+    top: 12px;
+    margin-left: 5px;
+  }
+  
