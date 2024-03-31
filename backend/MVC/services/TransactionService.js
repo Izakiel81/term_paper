@@ -32,7 +32,7 @@ class TransactionService {
   async addTransaction(client_id, property_id, agent_id, price) {
     if (!client_id || !property_id || !agent_id || !price)
       throw new ApiError("All fields are required", 400);
-    const date = await new Date(Date.now()).toISOString().slice(0, 19).replace('T', ' ');;
+    const date = await new Date(Date.now()).toISOString().slice(0, 19).replace('T', ' ');
     const query = `INSERT INTO TransactionTable (ClientId, PropertyId, AgentId, TransactionDate, Amount) VALUES ('${client_id}', '${property_id}', '${agent_id}',  '${date}', '${price}')`;
     return new Promise((resolve, reject) => {
       connection.query(

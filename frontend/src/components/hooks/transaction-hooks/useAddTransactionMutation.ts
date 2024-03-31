@@ -1,7 +1,8 @@
 import { useMutation } from "react-query";
 import { addTransaction } from "../../API/transactionAPI";
 
-export const useAddTransatcionMutation = () => {
+
+export const useAddTransacionMutation = () => {
   return useMutation({
     mutationFn: addTransaction,
     onError: (error: Error) => {

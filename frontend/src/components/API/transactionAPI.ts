@@ -18,20 +18,17 @@ export const addTransaction = async ({
   propertyId,
   clientId,
   agentId,
-  transactionDate,
   amount,
 }: {
   propertyId: number;
   clientId: number;
   agentId: number;
-  transactionDate: string;
   amount: string;
 }) => {
   const res = await axios.post<Transaction>(API_URL_TO_TRANSACTIONS, {
     propertyId,
     clientId,
     agentId,
-    transactionDate,
     amount,
   });
 

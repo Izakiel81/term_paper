@@ -12,14 +12,20 @@ import {
   Tr,
   Button,
   TableCaption,
+  Input,
 } from "@chakra-ui/react";
 import { Agent } from "../../interfaces/Agent";
 import DialogOverlay from "../dialog-overlay/DialogOverlay";
 import { useDeleteAgentMutation } from "../../hooks/agent-hooks/useDeleteAgentMutation";
+import { useAddAgentMutation } from "../../hooks/agent-hooks/useAddAgentMutation";
 
 const AgentsTable: FC = () => {
   const { data, refetch } = useAgents();
   const [allowRefetch, setAllowRefetch] = useState<boolean>(true);
+
+  const [newAgentName, setNewAgentName] = useState<string>("");
+  const [newAgentEmail, setNewAgentEmail] = useState<string>("");
+  const [newAgentPhone, setNewAgentPhone] = useState<string>("");
 
   const [showDialog, setShowDialog] = useState<boolean>(false);
   const [instanceToDelte, setInstanceToDelete] = useState<string>("");
@@ -27,7 +33,9 @@ const AgentsTable: FC = () => {
     null
   );
 
-  const { mutate } = useDeleteAgentMutation();
+  const { mutateAsync } = useDeleteAgentMutation();
+  const { mutateAsync: addAgentMutate } = useAddAgentMutation();
+
 
   if (!data && allowRefetch) {
     refetch().then(() => {
@@ -39,18 +47,77 @@ const AgentsTable: FC = () => {
 
   const deleteInstance = async () => {
     if (showDialog && instanceIdToDelete !== null) {
-      mutate({
+     await mutateAsync({
         id: instanceIdToDelete,
       });
     }
-    (await refetch) && refetch();
+    await refetch && refetch();
     setShowDialog(false);
   };
 
+  const addInstance = async () => {
+    await addAgentMutate({
+      name: newAgentName,
+      email: newAgentEmail,
+      phone: newAgentPhone,
+    });
+    setNewAgentEmail("");
+    setNewAgentPhone("");
+    setNewAgentName("");
+
+    await refetch && refetch();
+  };
+
+  const handlePhoneChange = (value: string) => {
+    if (/[^0-9-]/.test(value)) return;
+    
+    if (value.length <= 12) {
+      const lastCharIsHyphen =
+        value.length > 0 && value[value.length - 1] === "-";
+
+      if (value.length === 3 || value.length === 7) {
+        if (!lastCharIsHyphen) {
+          setNewAgentPhone(value + "-");
+        } else {
+          setNewAgentPhone(value);
+        }
+      } else {
+        if (lastCharIsHyphen && value.length < newAgentPhone.length) {
+          setNewAgentPhone(value.slice(0, -1));
+        } else {
+          setNewAgentPhone(value);
+        }
+      }
+    }
+  };
   return (
     <div className={classes.wrapper}>
       <div className={classes.button_container}>
-        <Button colorScheme="purple" size="md">
+        <Input
+          placeholder="Name"
+          onChange={(e) => setNewAgentName(e.target.value)}
+          value={newAgentName}
+        />
+        <Input
+          placeholder="Email"
+          onChange={(e) => setNewAgentEmail(e.target.value)}
+          value={newAgentEmail}
+        />
+        <Input
+          placeholder="Phone number"
+          onChange={(e) => handlePhoneChange(e.target.value)}
+          value={newAgentPhone}
+        />
+        <Button
+          colorScheme="purple"
+          size="md"
+          isDisabled={
+            newAgentName.length === 0 ||
+            newAgentEmail.length === 0 ||
+            newAgentPhone.length === 0
+          }
+          onClick={addInstance}
+        >
           Add
         </Button>
       </div>
